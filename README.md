@@ -19,3 +19,11 @@ An AI-powered financial dashboard that transforms raw bank statements (PDF/CSV) 
 2. Install dependencies: `pip install -r requirements.txt`
 3. Set up `.env` with `GROQ_API_KEY` 
 4. Run the app: `streamlit run app.py`
+
+## Live Demo
+
+https://github.com/user-attachments/assets/c9ee4714-fc04-4db7-83e7-6a1c1366cb91
+
+
+
+
