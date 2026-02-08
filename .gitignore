@@ -1,0 +1,7 @@
+.env
+__pycache__/
+data/
+transaction_memory.json
+*.pdf
+*.csv
+.conda/
