@@ -20,11 +20,6 @@ An AI-powered financial dashboard that transforms raw bank statements (PDF/CSV) 
 3. Set up `.env` with `GROQ_API_KEY` 
 4. Run the app: `streamlit run app.py`
 
-## Live Demo
-
-https://github.com/user-attachments/assets/c9ee4714-fc04-4db7-83e7-6a1c1366cb91
-
-
 ## 🏗️ System Architecture
 
 The following diagram illustrates the end-to-end data pipeline, from raw PDF ingestion via Llama 3 and categorization logic and the Scikit-Learn forecasting engine.
@@ -34,6 +29,13 @@ The following diagram illustrates the end-to-end data pipeline, from raw PDF ing
 * **Extraction Layer:** Handles unstructured PDF/CSV parsing using Google Gemini.
 * **Intelligence Layer:** Features a hybrid Llama 3 + JSON Cache system for transaction tagging.
 * **Predictive Layer:** Uses Linear Regression to estimate month-end totals based on current velocity.
+
+## Live Demo
+
+https://github.com/user-attachments/assets/c9ee4714-fc04-4db7-83e7-6a1c1366cb91
+
+
+
 
 
 
