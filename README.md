@@ -25,5 +25,13 @@ An AI-powered financial dashboard that transforms raw bank statements (PDF/CSV) 
 https://github.com/user-attachments/assets/c9ee4714-fc04-4db7-83e7-6a1c1366cb91
 
 
+## System Architecture
+
+
+
+
+![graphviz](https://github.com/user-attachments/assets/c562b8ec-e37c-43cd-ab7f-9bdd41d52dfa)
+
+
 
 
