@@ -25,12 +25,18 @@ An AI-powered financial dashboard that transforms raw bank statements (PDF/CSV) 
 https://github.com/user-attachments/assets/c9ee4714-fc04-4db7-83e7-6a1c1366cb91
 
 
-## System Architecture
+## 🏗️ System Architecture
 
-
-
+The following diagram illustrates the end-to-end data pipeline, from raw PDF ingestion via Llama 3 and categorization logic and the Scikit-Learn forecasting engine.
 
 ![graphviz](https://github.com/user-attachments/assets/c562b8ec-e37c-43cd-ab7f-9bdd41d52dfa)
+
+* **Extraction Layer:** Handles unstructured PDF/CSV parsing using Google Gemini.
+* **Intelligence Layer:** Features a hybrid Llama 3 + JSON Cache system for transaction tagging.
+* **Predictive Layer:** Uses Linear Regression to estimate month-end totals based on current velocity.
+
+
+
 
 
 
