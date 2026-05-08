@@ -21,7 +21,7 @@ st.set_page_config(
 st.markdown("""
     <style>
     .main { padding-top: 2rem; }
-    .stMetric { background-color: #f0f2f6; padding: 10px; border-radius: 10px; }
+    .stMetric { background-color: #000000; padding: 10px; border-radius: 10px; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -38,7 +38,7 @@ with st.sidebar:
     uploaded_file = st.file_uploader("Upload Statement (PDF/CSV)", type=["csv", "pdf"])
     
     st.markdown("---")
-    if st.button("🗑️ Clear / Reset App", use_container_width=True):
+    if st.button("🗑️ Clear / Reset App", width='stretch'):
         st.session_state['data'] = None
         st.rerun()
         
@@ -105,10 +105,10 @@ if uploaded_file is not None:
             
             col_a, col_b = st.columns([3, 1])
             with col_a:
-                st.dataframe(df, use_container_width=True, height=400)
+                st.dataframe(df, width='stretch', height=400)
             with col_b:
                 st.markdown("### Actions")
-                if st.button("🏷️ Run AI Categorization", use_container_width=True, type="primary"):
+                if st.button("🏷️ Run AI Categorization", width='stretch', type="primary"):
                     with st.spinner("Classifying transactions..."):
                         st.session_state['data'] = categorize_transactions(st.session_state['data'])
                         st.success("Done!")
@@ -130,7 +130,7 @@ if uploaded_file is not None:
                     with c1:
                         st.markdown("#### Category Breakdown")
                         fig_pie = px.pie(spending_df, names='Category', values='Amount', hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
-                        st.plotly_chart(fig_pie, use_container_width=True)
+                        st.plotly_chart(fig_pie, width='stretch')
                         
                     with c2:
                         st.markdown("#### Top Expenses")
@@ -163,7 +163,7 @@ if uploaded_file is not None:
                                 m1.metric("Current Spend", f"₹{current_total:,.2f}")
                                 m2.metric("Predicted Month-End", f"₹{predicted_total:,.2f}")
                                 
-                                st.plotly_chart(fig_forecast, use_container_width=True)
+                                st.plotly_chart(fig_forecast, width='stretch')
                             else:
                                 st.warning("Not enough data to forecast (need at least 2 days of activity).")
                         except Exception as e:
@@ -173,28 +173,66 @@ if uploaded_file is not None:
 
         # --- TAB 4: CHAT ---
         with tab4:
-            st.subheader("Chat with your Finances")
-            
-            # Simple chat interface
+            st.markdown("### 💬 Chat with your Finances")
+
+            # ── Fixed-bottom chat input + scrollable message area ──────────────────
+            st.markdown("""
+                <style>
+                /* 1. Pin the chat input to the bottom of the viewport */
+                div[data-testid="stChatInput"] {
+                    position: fixed !important;
+                    bottom: 0 !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    padding: 12px 1.5rem 20px 1.5rem !important;
+                    background-color: var(--background-color) !important;
+                    border-top: 1px solid rgba(255, 255, 255, 0.08);
+                    z-index: 9999 !important;
+                    max-width: 860px !important;   /* adjust to taste */
+                    margin-left: auto !important;
+                    margin-right: auto !important;
+                }
+
+                /* 2. If you have a sidebar, offset the input so it doesn't underlap it */
+                @media (min-width: 768px) {
+                    div[data-testid="stChatInput"] {
+                        left: 245px !important; /* matches default Streamlit sidebar width */
+                    }
+                }
+
+                /* 3. Push the bottom of the scrollable area up so messages
+                    don't disappear behind the fixed input bar */
+                div[data-testid="stVerticalBlockBorderWrapper"] > div {
+                    padding-bottom: 90px !important;
+                }
+                </style>
+            """, unsafe_allow_html=True)
+
+            # ── Scrollable message container ────────────────────────────────────────
+            chat_container = st.container(height=500, border=False)
+
             if "messages" not in st.session_state:
                 st.session_state.messages = []
 
-            # Display chat history
-            for message in st.session_state.messages:
-                with st.chat_message(message["role"]):
-                    st.markdown(message["content"])
+            # Render existing messages
+            with chat_container:
+                for message in st.session_state.messages:
+                    with st.chat_message(message["role"]):
+                        st.markdown(message["content"])
 
-            # React to user input
-            if prompt := st.chat_input("Ask something like 'How much did I spend on food? '"):
-                # Display user message
-                st.chat_message("user").markdown(prompt)
+            # ── Chat input (rendered outside the container so CSS can grab it) ──────
+            if prompt := st.chat_input("Ask about your spending... (e.g., 'How much on food?')"):
+
+                with chat_container:
+                    st.chat_message("user").markdown(prompt)
                 st.session_state.messages.append({"role": "user", "content": prompt})
 
-                with st.spinner("Thinking..."):
-                    response = process_query(df, prompt)
-                
-                # Display assistant response
-                st.chat_message("assistant").markdown(response)
+                with chat_container:
+                    with st.chat_message("assistant"):
+                        with st.spinner("Thinking..."):
+                            response = process_query(df, prompt)
+                            st.markdown(response)
+
                 st.session_state.messages.append({"role": "assistant", "content": response})
 
     else:
