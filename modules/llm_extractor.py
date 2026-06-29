@@ -18,7 +18,7 @@ llm = ChatGroq(
 
 def convert_text_to_df(raw_text):
     """
-    Uses Llama 3.3 on Groq to parse messy bank text into a structured DataFrame.
+    Uses llama 3.3 on Groq to parse messy bank text into a structured DataFrame.
     """
     
     prompt_template = """
