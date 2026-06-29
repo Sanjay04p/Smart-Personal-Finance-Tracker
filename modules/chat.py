@@ -6,7 +6,7 @@ import os
 load_dotenv()
 api_key=os.getenv("API_KEY")
 # Using Llama 3.3 for its reasoning capabilities and large context window
-llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0, api_key=api_key)
+llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0, api_key=api_key)
 
 def process_query(df, query):
     """
