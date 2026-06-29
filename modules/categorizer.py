@@ -8,14 +8,14 @@ import os
 load_dotenv()
 api_key=os.getenv("API_KEY")
 llm = ChatGroq(
-    model="llama-3.3-70b-versatile", 
+    model="openai/gpt-oss-20b", 
     temperature=0,
     api_key=api_key
 )
 
 def categorize_transactions(df):
     """
-    Categorizes transaction descriptions using Llama 4.
+    Categorizes transaction descriptions using Llama 3.1.
     """
     
     # 1. Identify the 'Description' column dynamically
