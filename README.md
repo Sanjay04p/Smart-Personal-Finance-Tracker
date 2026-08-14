@@ -4,13 +4,13 @@ An AI-powered financial dashboard that transforms raw bank statements (PDF/CSV) 
 
 ## 🚀 Features
 * **Multi-Format Ingestion:** Extracts data from complex PDF bank statements using **Llama 3.3**.
-* **Smart Categorization:** Classifies transactions (e.g., "Uber" -> "Transport") using **Llama 3.3** with an intelligent caching layer to reduce API costs.
+* **Smart Categorization:** Classifies transactions (e.g., "Uber" -> "Transport") using **openai/gpt-oss-20b** with an intelligent caching layer to reduce API costs.
 * **Spending Forecast:** Predicts month-end spending using **Linear Regression (Scikit-Learn)** based on daily spending velocity.
 * **Chat with Data:** RAG-style Q&A interface to ask questions like *"How much did I spend on food?"*.
 
 ## 🛠️ Tech Stack
 * **Frontend:** Streamlit, Plotly
-* **AI Models:** Llama 3.3 via Groq (Extraction,Reasoning)
+* **AI Models:** Llama 3.3 via Groq (Extraction), openai/gpt-oss-20b(Categorization,Reasoning)
 * **Machine Learning:** Scikit-Learn (Forecasting)
 * **Data Processing:** Pandas, PDFPlumber
 
