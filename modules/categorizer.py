@@ -15,7 +15,7 @@ llm = ChatGroq(
 
 def categorize_transactions(df):
     """
-    Categorizes transaction descriptions using Llama 3.1.
+    Categorizes transaction descriptions using openai/gpt-oss-20b.
     """
     
     # 1. Identify the 'Description' column dynamically
